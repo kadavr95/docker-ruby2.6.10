@@ -118,7 +118,35 @@ RUN set -eux; \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)"; \
 	apk add --no-network --virtual .ruby-rundeps $runDeps; \
- 	gem update --system 3.4.22; \
+	gem update --system 3.4.22; \
+	gem update -q --silent --system \
+	&& mv /usr/local/lib/ruby/gems/2.6.0/specifications/default/stringio-0.0.2.gemspec /usr/local/lib/ruby/gems/2.6.0/specifications/ \
+	&& gem info stringio \
+	&& gem install --default stringio -v 3.0.1.2 -i /usr/local/lib/ruby/gems/2.6.0 \
+	&& gem info stringio \
+	&& gem uninstall -i /usr/local/lib/ruby/gems/2.6.0 stringio -v 0.0.2 \
+	&& gem info stringio; \
+	gem update -q --silent --system \
+	&& mv /usr/local/lib/ruby/gems/2.6.0/specifications/default/webrick-1.4.4.gemspec /usr/local/lib/ruby/gems/2.6.0/specifications/ \
+	&& gem info webrick \
+	&& gem install --default webrick -v 1.9.0 -i /usr/local/lib/ruby/gems/2.6.0 \
+	&& gem info webrick \
+	&& gem uninstall -i /usr/local/lib/ruby/gems/2.6.0 webrick -v 1.4.4 \
+	&& gem info webrick; \
+	gem update -q --silent --system \
+	&& mv /usr/local/lib/ruby/gems/2.6.0/specifications/default/rexml-3.1.9.1.gemspec /usr/local/lib/ruby/gems/2.6.0/specifications/ \
+	&& gem info rexml \
+	&& gem install --default rexml -v 3.3.9 -i /usr/local/lib/ruby/gems/2.6.0 \
+	&& gem info rexml \
+	&& gem uninstall -i /usr/local/lib/ruby/gems/2.6.0 rexml -v 3.1.9.1 \
+	&& gem info rexml; \
+	gem update -q --silent --system \
+	&& mv /usr/local/lib/ruby/gems/2.6.0/specifications/default/json-2.1.0.gemspec /usr/local/lib/ruby/gems/2.6.0/specifications/ \
+	&& gem info json \
+	&& gem install --default json -v 2.7.6 -i /usr/local/lib/ruby/gems/2.6.0 \
+	&& gem info json \
+	&& gem uninstall -i /usr/local/lib/ruby/gems/2.6.0 json -v 2.1.0 \
+	&& gem info json; \
 	apk del --no-network .ruby-builddeps; \
 	\
 	cd /; \
