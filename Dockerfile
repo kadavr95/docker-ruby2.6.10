@@ -118,6 +118,7 @@ RUN set -eux; \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
 	)"; \
 	apk add --no-network --virtual .ruby-rundeps $runDeps; \
+ 	gem update --system 3.4.22; \
 	apk del --no-network .ruby-builddeps; \
 	\
 	cd /; \
